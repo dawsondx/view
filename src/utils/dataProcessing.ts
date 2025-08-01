@@ -75,7 +75,7 @@ export const getSkillLevelText = (level: SkillLevel): string => {
 };
 
 // 获取技能等级的数值（用于进度条显示）
-export const getSkillLevelValue = (level: SkillLevel, skillName?: string): number => {
+export const getSkillLevelValue = (level: SkillLevel, skillName?: string, category?: string): number => {
   // 为特定技能设置自定义百分比
   if (skillName) {
     const customValues: Record<string, number> = {
@@ -84,6 +84,22 @@ export const getSkillLevelValue = (level: SkillLevel, skillName?: string): numbe
     };
     if (customValues[skillName]) {
       return customValues[skillName];
+    }
+  }
+  
+  // 为技能类别设置自定义百分比
+  if (category) {
+    const categoryValues: Record<string, number> = {
+      '办公软件': 100,
+      '设计软件': 70,
+      '新兴技术': 80,
+      '管理技能': 75,
+      '专业技能': 70,
+      '编程技能': 70,
+      '软技能': 75 // 默认值，具体技能会被上面的customValues覆盖
+    };
+    if (categoryValues[category]) {
+      return categoryValues[category];
     }
   }
   

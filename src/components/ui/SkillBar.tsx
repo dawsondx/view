@@ -9,7 +9,7 @@ interface SkillBarProps {
 }
 
 export const SkillBar: React.FC<SkillBarProps> = ({ skill, index }) => {
-  const levelValue = getSkillLevelValue(skill.level, skill.name);
+  const levelValue = getSkillLevelValue(skill.level, skill.name, skill.category);
   const levelText = getSkillLevelText(skill.level);
 
   const containerVariants = {
