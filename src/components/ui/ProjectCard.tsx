@@ -87,7 +87,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
         y: -8,
         transition: { duration: 0.3 }
       }}
-      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer flex flex-col h-full"
       onClick={onClick}
     >
       {/* 背景装饰 */}
@@ -100,7 +100,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
         </span>
       </div>
 
-      <div className="relative p-6 z-10">
+      <div className="relative p-6 z-10 flex-1 flex flex-col">
         {/* 项目图标和标题 */}
         <div className="flex items-start gap-4 mb-4">
           <motion.div
@@ -167,7 +167,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
         )}
 
         {/* 查看详情按钮 */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
             <span>{project.responsibilities.length} 项职责</span>
             <span>•</span>
@@ -179,16 +179,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClic
             查看详情
           </button>
         </div>
-
-        {/* 底部装饰线 */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: index * 0.1 + 0.8, duration: 0.5 }}
-          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left"
-          style={{ width: '100%' }}
-        />
       </div>
+
+      {/* 底部装饰线 */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: index * 0.1 + 0.8, duration: 0.5 }}
+        className="h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left"
+        style={{ width: '100%' }}
+      />
     </motion.div>
   );
 };

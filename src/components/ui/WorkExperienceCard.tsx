@@ -110,7 +110,7 @@ export const WorkExperienceCard: React.FC<WorkExperienceCardProps> = ({ experien
         y: -8,
         transition: { duration: 0.3 }
       }}
-      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col h-full"
     >
       {/* 当前职位标识 */}
       {experience.current && (
@@ -130,7 +130,7 @@ export const WorkExperienceCard: React.FC<WorkExperienceCardProps> = ({ experien
       {/* 背景装饰 */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900/20 dark:to-green-900/20 rounded-full transform translate-x-16 -translate-y-16 group-hover:scale-110 transition-transform duration-500" />
 
-      <div className="relative p-6 z-10">
+      <div className="relative p-6 z-10 flex-1 flex flex-col">
         {/* 公司图标和基本信息 */}
         <div className="flex items-start gap-4 mb-4">
           <motion.div
@@ -255,19 +255,20 @@ export const WorkExperienceCard: React.FC<WorkExperienceCardProps> = ({ experien
           )}
         </AnimatePresence>
 
-        {/* 底部装饰线 */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: index * 0.2 + 0.8, duration: 0.5 }}
-          className={`absolute bottom-0 left-0 h-1 transform origin-left ${
-            experience.current 
-              ? 'bg-gradient-to-r from-green-500 to-blue-500' 
-              : 'bg-gradient-to-r from-blue-500 to-purple-500'
-          }`}
-          style={{ width: '100%' }}
-        />
       </div>
+
+      {/* 底部装饰线 */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: index * 0.2 + 0.8, duration: 0.5 }}
+        className={`h-1 transform origin-left ${
+          experience.current 
+            ? 'bg-gradient-to-r from-green-500 to-blue-500' 
+            : 'bg-gradient-to-r from-blue-500 to-purple-500'
+        }`}
+        style={{ width: '100%' }}
+      />
     </motion.div>
   );
 };

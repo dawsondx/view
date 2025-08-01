@@ -81,7 +81,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({ certificate, i
         y: -8,
         transition: { duration: 0.3 }
       }}
-      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col h-full"
     >
       {/* 背景装饰 */}
       <div className={`absolute top-0 right-0 w-24 h-24 rounded-full transform translate-x-12 -translate-y-12 group-hover:scale-110 transition-transform duration-500 ${
@@ -101,7 +101,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({ certificate, i
         </span>
       </div>
 
-      <div className="relative p-6 z-10">
+      <div className="relative p-6 z-10 flex-1 flex flex-col">
         {/* 图标和标题 */}
         <div className="flex items-start gap-4 mb-4">
           <motion.div
@@ -141,24 +141,24 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({ certificate, i
 
         {/* 描述 */}
         {certificate.description && (
-          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed flex-1">
             {certificate.description}
           </p>
         )}
-
-        {/* 底部装饰线 */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: index * 0.15 + 0.8, duration: 0.5 }}
-          className={`absolute bottom-0 left-0 h-1 transform origin-left ${
-            isCertificate
-              ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
-              : 'bg-gradient-to-r from-yellow-500 to-orange-500'
-          }`}
-          style={{ width: '100%' }}
-        />
       </div>
+
+      {/* 底部装饰线 */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: index * 0.15 + 0.8, duration: 0.5 }}
+        className={`h-1 transform origin-left ${
+          isCertificate
+            ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
+            : 'bg-gradient-to-r from-yellow-500 to-orange-500'
+        }`}
+        style={{ width: '100%' }}
+      />
     </motion.div>
   );
 };

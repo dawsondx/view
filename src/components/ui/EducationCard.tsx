@@ -75,7 +75,7 @@ export const EducationCard: React.FC<EducationCardProps> = ({ education, index }
         y: -8,
         transition: { duration: 0.3 }
       }}
-      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col h-full"
     >
       {/* 背景装饰 */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full transform translate-x-16 -translate-y-16 group-hover:scale-110 transition-transform duration-500" />
@@ -94,7 +94,7 @@ export const EducationCard: React.FC<EducationCardProps> = ({ education, index }
         </motion.div>
       )}
 
-      <div className="relative p-6 z-10">
+      <div className="relative p-6 z-10 flex-1 flex flex-col">
         {/* 学校图标和名称 */}
         <div className="flex items-start gap-4 mb-4">
           <motion.div
@@ -161,15 +161,16 @@ export const EducationCard: React.FC<EducationCardProps> = ({ education, index }
           </motion.div>
         )}
 
-        {/* 底部装饰线 */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: index * 0.2 + 0.8, duration: 0.5 }}
-          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left"
-          style={{ width: '100%' }}
-        />
       </div>
+
+      {/* 底部装饰线 */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: index * 0.2 + 0.8, duration: 0.5 }}
+        className="h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left"
+        style={{ width: '100%' }}
+      />
     </motion.div>
   );
 };
