@@ -139,7 +139,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personalInfo }) 
                 </motion.div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-50 pointer-events-none">
                   <div className="bg-white rounded-lg shadow-xl p-3 border max-w-xs">
-                    <img src="qrcode-wechat.png" alt="微信二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
+                    <img src="qrcode-wechat.webp" alt="微信二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
                     <p className="text-xs text-gray-600 text-center mt-2">扫码添加微信</p>
                   </div>
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
@@ -159,7 +159,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personalInfo }) 
                 </motion.div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-50 pointer-events-none">
                   <div className="bg-white rounded-lg shadow-xl p-3 border max-w-xs">
-                    <img src="qrcode-gzh.png" alt="公众号二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
+                    <img src="qrcode-gzh.webp" alt="公众号二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
                     <p className="text-xs text-gray-600 text-center mt-2">关注公众号</p>
                   </div>
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
@@ -179,7 +179,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ personalInfo }) 
                 </motion.div>
                 <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 z-50 pointer-events-none">
                   <div className="bg-white rounded-lg shadow-xl p-3 border max-w-xs">
-                    <img src="qrcode-xhs.png" alt="小红书二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
+                    <img src="qrcode-xhs.webp" alt="小红书二维码" className="w-auto h-auto max-w-[200px] max-h-[200px] mx-auto block" />
                     <p className="text-xs text-gray-600 text-center mt-2">关注小红书</p>
                   </div>
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
