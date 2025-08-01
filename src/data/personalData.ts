@@ -239,14 +239,14 @@ export const personalData: PersonalData = {
     {
       id: 'skill-7',
       name: '沟通协调',
-      level: SkillLevel.EXPERT,
+      level: SkillLevel.PROFICIENT,
       category: '软技能',
       description: '具备优秀的沟通协调能力，擅长多方协调和团队管理'
     },
     {
       id: 'skill-8',
       name: '学习研究',
-      level: SkillLevel.EXPERT,
+      level: SkillLevel.PROFICIENT,
       category: '软技能',
       description: '学习能力强，擅长学习研究并使用新技术，适应变化能力强'
     }

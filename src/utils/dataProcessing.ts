@@ -75,7 +75,18 @@ export const getSkillLevelText = (level: SkillLevel): string => {
 };
 
 // 获取技能等级的数值（用于进度条显示）
-export const getSkillLevelValue = (level: SkillLevel): number => {
+export const getSkillLevelValue = (level: SkillLevel, skillName?: string): number => {
+  // 为特定技能设置自定义百分比
+  if (skillName) {
+    const customValues: Record<string, number> = {
+      '沟通协调': 70,
+      '学习研究': 80
+    };
+    if (customValues[skillName]) {
+      return customValues[skillName];
+    }
+  }
+  
   const levelValues = {
     [SkillLevel.EXPERT]: 100,
     [SkillLevel.PROFICIENT]: 80,
