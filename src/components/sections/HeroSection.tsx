@@ -132,7 +132,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
           <motion.div className="flex-1 flex justify-center" variants={itemVariants}>
             <div className="relative">
               {/* Avatar */}
-              <Avatar name={personalInfo.name} src="/touxiang.jpg" size="xl" />
+              <Avatar name={personalInfo.name} src="touxiang.jpg" size="xl" />
 
               {/* Floating info card */}
               <motion.div
