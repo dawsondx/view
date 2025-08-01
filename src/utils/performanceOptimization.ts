@@ -4,7 +4,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   wait: number,
   immediate = false
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: number | null = null
+  let timeout: ReturnType<typeof setTimeout> | null = null
 
   return function executedFunction(...args: Parameters<T>) {
     const later = () => {

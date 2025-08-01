@@ -88,7 +88,7 @@ export const useResponsive = (): ResponsiveState => {
     };
 
     // 防抖处理
-    let timeoutId: number;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const debouncedHandleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(handleResize, 150);
