@@ -79,49 +79,49 @@ function App() {
                 
                 {/* Education Section */}
                 <SectionSpacing id="education" {...sectionConfigs.education}>
-                  <AnimatedSection delay={0.1}>
+                  <AnimatedSection delay={0.1} sectionName="Education">
                     <EducationSection education={personalData.education} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Experience Section */}
                 <SectionSpacing id="experience" {...sectionConfigs.experience}>
-                  <AnimatedSection delay={0.2}>
+                  <AnimatedSection delay={0.2} sectionName="Experience">
                     <ExperienceSection workExperience={personalData.workExperience} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Projects Section */}
                 <SectionSpacing id="projects" {...sectionConfigs.projects}>
-                  <AnimatedSection delay={0.3}>
+                  <AnimatedSection delay={0.3} sectionName="Projects">
                     <ProjectsSection projects={personalData.projects} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Skills Section */}
                 <SectionSpacing id="skills" {...sectionConfigs.skills}>
-                  <AnimatedSection delay={0.4}>
+                  <AnimatedSection delay={0.4} sectionName="Skills">
                     <SkillsSection skills={personalData.skills} certificates={personalData.certificates} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Portfolio Section */}
                 <SectionSpacing id="portfolio" {...sectionConfigs.portfolio}>
-                  <AnimatedSection delay={0.5}>
+                  <AnimatedSection delay={0.5} sectionName="Portfolio">
                     <PortfolioSection portfolio={personalData.portfolio} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Evaluation Section */}
                 <SectionSpacing id="evaluation" {...sectionConfigs.evaluation}>
-                  <AnimatedSection delay={0.6}>
+                  <AnimatedSection delay={0.6} sectionName="Evaluation">
                     <EvaluationSection selfEvaluation={personalData.selfEvaluation} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Contact Section */}
                 <SectionSpacing id="contact" {...sectionConfigs.contact}>
-                  <AnimatedSection delay={0.7}>
+                  <AnimatedSection delay={0.7} sectionName="Contact">
                     <ContactSection personalInfo={personalData.basicInfo} />
                   </AnimatedSection>
                 </SectionSpacing>
