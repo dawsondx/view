@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Dawson个人作品集 - Office培训师 | PPT设计师 | 神器收藏家",
   "author": "Dawson <dawsondx@foxmail.com>",
-  "homepage": "https://dawsondx.github.io/resume0801/",
+  "homepage": "https://view.dawsondx.top/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
