@@ -1,61 +1,16 @@
 // 个人基础信息接口
 export interface PersonalInfo {
   name: string;
+  wechatName: string;
   title: string;
   email: string;
-  phone: string;
+  wechat: string;
   location: string;
-  age: number;
-  education: string;
-  major: string;
-  university: string;
-  currentJob: string;
-  status: string;
-  company: string;
+  tags: string[];           // 标签版介绍（7个身份标签）
+  personalStory: string[];  // 自话版介绍（个人成长故事）
+  selfIntro: string[];      // 基础自我介绍数组
+  services: string[];       // 提供的服务
   avatar?: string;
-}
-
-// 教育背景接口
-export interface Education {
-  id: string;
-  school: string;
-  major: string;
-  degree: string;
-  duration: string;
-  startYear: number;
-  endYear: number;
-  schoolType: string;
-  description?: string;
-}
-
-// 工作经历接口
-export interface WorkExperience {
-  id: string;
-  company: string;
-  position: string;
-  duration: string;
-  startDate: string;
-  endDate?: string;
-  department?: string;
-  responsibilities: string[];
-  current: boolean;
-  achievements?: string[];
-}
-
-// 项目经验接口
-export interface Project {
-  id: string;
-  name: string;
-  duration: string;
-  company: string;
-  role: string;
-  description: string;
-  responsibilities: string[];
-  challenges: string[];
-  achievements: string[];
-  category: ProjectCategory;
-  technologies?: string[];
-  teamSize?: number;
 }
 
 // 技能接口
@@ -63,19 +18,12 @@ export interface Skill {
   id: string;
   name: string;
   level: SkillLevel;
-  category: string;
+  category: SkillCategory;
   description?: string;
+  customPercentage?: number; // 自定义百分比，如果不设置则使用默认映射
 }
 
-// 证书和奖项接口
-export interface Certificate {
-  id: string;
-  name: string;
-  issuer?: string;
-  date?: string;
-  type: CertificateType;
-  description?: string;
-}
+
 
 // 作品集接口
 export interface Portfolio {
@@ -86,15 +34,33 @@ export interface Portfolio {
   size?: string;
 }
 
+// 成就数据接口
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  metrics?: {
+    value: string;
+    label: string;
+  };
+  category: 'education' | 'design' | 'tools' | 'ai';
+}
+
+// 服务数据接口
+export interface Service {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  features: string[];
+}
+
 // 完整个人数据接口
 export interface PersonalData {
   basicInfo: PersonalInfo;
-  education: Education[];
-  workExperience: WorkExperience[];
-  projects: Project[];
   skills: Skill[];
-  certificates: Certificate[];
-  selfEvaluation: string[];
+  achievements: Achievement[];
+  services: Service[];
   portfolio: Portfolio;
 }
 
@@ -106,20 +72,15 @@ export enum SkillLevel {
   EXPERT = 'expert'
 }
 
-// 证书类型枚举
-export enum CertificateType {
-  CERTIFICATE = 'certificate',
-  AWARD = 'award'
+// 技能分类枚举
+export enum SkillCategory {
+  OFFICE_SOFTWARE = '办公软件',
+  DESIGN_SOFTWARE = '设计软件',
+  EMERGING_TECH = '新兴技术',
+  PROGRAMMING = '编程技能'
 }
 
-// 项目分类枚举
-export enum ProjectCategory {
-  WEB_DEVELOPMENT = 'web-development',
-  MOBILE_APP = 'mobile-app',
-  SYSTEM_INTEGRATION = 'system-integration',
-  DATA_ANALYSIS = 'data-analysis',
-  PROJECT_MANAGEMENT = 'project-management'
-}
+
 
 // 导出导航相关类型
 export * from './navigation';

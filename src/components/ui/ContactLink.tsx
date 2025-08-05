@@ -5,7 +5,7 @@ interface ContactLinkProps {
   href: string;
   icon: React.ReactNode;
   label: string;
-  type: 'email' | 'phone';
+  type: 'email' | 'phone' | 'wechat';
 }
 
 export const ContactLink: React.FC<ContactLinkProps> = ({ href, icon, label, type }) => {
@@ -15,6 +15,11 @@ export const ContactLink: React.FC<ContactLinkProps> = ({ href, icon, label, typ
       window.location.href = `mailto:${href}`;
     } else if (type === 'phone') {
       window.location.href = `tel:${href}`;
+    } else if (type === 'wechat') {
+      // For WeChat, we can copy to clipboard or show a modal
+      navigator.clipboard.writeText(href).then(() => {
+        alert(`微信号 ${href} 已复制到剪贴板`);
+      });
     }
   };
 

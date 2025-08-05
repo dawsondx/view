@@ -17,9 +17,10 @@ const EmailIcon = () => (
   </svg>
 );
 
-const PhoneIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+const WeChatIcon = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 4.882-1.932 7.621-.55-.302-2.676-2.476-4.991-5.748-6.294C9.466 2.884 9.081 2.188 8.691 2.188z" />
+    <path d="M17.31 11.19c-3.573 0-6.426 2.385-6.426 5.315 0 1.694.94 3.206 2.424 4.223a.462.462 0 0 1 .167.525l-.312 1.191a.326.326 0 0 0-.029.141c0 .108.086.195.195.195a.233.233 0 0 0 .117-.039l1.514-.882a.694.694 0 0 1 .573-.079 8.265 8.265 0 0 0 2.277.316c3.573 0 6.426-2.385 6.426-5.315s-2.853-5.315-6.426-5.315z" />
   </svg>
 );
 
@@ -32,7 +33,7 @@ const LocationIcon = () => (
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
   const typewriterText = useTypewriter({
-    words: [personalInfo.title, personalInfo.currentJob, '产品经理', '综合部经理', '项目经理'],
+    words: personalInfo.tags,
     typeSpeed: 100,
     deleteSpeed: 50,
     delayBetweenWords: 2000,
@@ -42,7 +43,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
   const itemVariants = fadeInUp;
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden">
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden pt-20">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
@@ -59,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
           {/* Left side - Personal Info */}
           <motion.div className="flex-1 text-center lg:text-left" variants={itemVariants}>
             {/* Name */}
-            <motion.h1 
+            <motion.h1
               className="text-5xl lg:text-6xl font-bold text-gray-900 mb-4"
               variants={itemVariants}
             >
@@ -78,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
             </motion.h1>
 
             {/* Typewriter Title */}
-            <motion.div 
+            <motion.div
               className="h-16 mb-6"
               variants={itemVariants}
             >
@@ -89,27 +90,79 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
             </motion.div>
 
             {/* Basic Info */}
-            <motion.div 
-              className="space-y-2 mb-8 text-gray-600"
+            <motion.div
+              className="space-y-4 mb-8 text-gray-600"
               variants={itemVariants}
             >
               <div className="flex items-center justify-center lg:justify-start gap-2">
                 <LocationIcon />
                 <span>{personalInfo.location}</span>
               </div>
-              <p className="text-lg">
-                {personalInfo.age}岁 • {personalInfo.education} • {personalInfo.major}
-              </p>
-              <p className="text-lg">
-                毕业于 <span className="font-semibold text-primary-600">{personalInfo.university}</span>
-              </p>
-              <p className="text-lg">
-                现任 <span className="font-semibold text-primary-600">{personalInfo.company}</span> {personalInfo.currentJob}
-              </p>
+
+              {/* 基础服务介绍 */}
+              <div className="space-y-2">
+                {personalInfo.selfIntro.map((intro, index) => (
+                  <motion.p
+                    key={index}
+                    className="text-lg"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                  >
+                    <span className="font-semibold text-primary-600">{intro}</span>
+                  </motion.p>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* 标签展示区域 */}
+            <motion.div
+              className="mb-8"
+              variants={itemVariants}
+            >
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center lg:text-left">身份标签</h3>
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                {personalInfo.tags.map((tag, index) => (
+                  <motion.span
+                    key={index}
+                    className="px-3 py-1 bg-gradient-to-r from-primary-100 to-accent-100 text-primary-700 rounded-full text-sm font-medium border border-primary-200"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.8 + index * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                  >
+                    {tag}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* 个人故事展示区域 */}
+            <motion.div
+              className="mb-8 bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-gray-200"
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+            >
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center lg:text-left">个人成长故事</h3>
+              <div className="space-y-3">
+                {personalInfo.personalStory.map((story, index) => (
+                  <motion.p
+                    key={index}
+                    className="text-gray-700 leading-relaxed"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.4 + index * 0.2 }}
+                  >
+                    {story}
+                  </motion.p>
+                ))}
+              </div>
             </motion.div>
 
             {/* Contact Links */}
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               variants={itemVariants}
             >
@@ -120,10 +173,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
                 type="email"
               />
               <ContactLink
-                href={personalInfo.phone}
-                icon={<PhoneIcon />}
-                label="拨打电话"
-                type="phone"
+                href={personalInfo.wechat}
+                icon={<WeChatIcon />}
+                label="微信联系"
+                type="wechat"
               />
             </motion.div>
           </motion.div>
@@ -138,9 +191,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personalInfo }) => {
               <motion.div
                 className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-xl p-6 max-w-xs"
                 initial={{ opacity: 0, scale: 0.8 }}
-variants={{
-  visible: { opacity: 1, scale: 1 }
-}}
+                variants={{
+                  visible: { opacity: 1, scale: 1 }
+                }}
                 transition={{ delay: 0.8, duration: 0.5 }}
                 whileHover={{ y: -5 }}
                 {...float}
@@ -148,13 +201,13 @@ variants={{
                 <div className="text-center">
                   <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2 animate-pulse"></div>
                   <p className="text-sm font-semibold text-gray-800 mb-1">
-                    {personalInfo.status}
+                    开放合作
                   </p>
                   <p className="text-xs text-gray-600">
-                    {personalInfo.company}
+                    {personalInfo.title}
                   </p>
-                  <p className="text-xs text-gray-600">
-                    {personalInfo.currentJob}
+                  <p className="text-xs text-gray-600 mt-1">
+                    微信: {personalInfo.wechat}
                   </p>
                 </div>
               </motion.div>

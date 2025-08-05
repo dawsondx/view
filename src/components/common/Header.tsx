@@ -69,9 +69,26 @@ export const Header: React.FC = () => {
             <div className="flex-shrink-0">
               <button
                 onClick={() => scrollToSection('hero')}
-                className="text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 transition-colors duration-200"
+                className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200"
               >
-                段翔
+                <img
+                  src="/touxiang.webp"
+                  alt="Dawson头像"
+                  className="w-8 h-8 rounded-full object-cover"
+                  onError={(e) => {
+                    // 如果图片加载失败，显示文字
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'block';
+                  }}
+                />
+                <span 
+                  className="text-xl font-bold text-gray-900 dark:text-white"
+                  style={{display: 'none'}}
+                >
+                  Dawson
+                </span>
               </button>
             </div>
 

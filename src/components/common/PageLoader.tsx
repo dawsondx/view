@@ -52,7 +52,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({ onLoadingComplete }) => 
                 />
               </div>
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                段翔的个人作品集
+                Dawson的个人作品集
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
                 正在加载精彩内容...

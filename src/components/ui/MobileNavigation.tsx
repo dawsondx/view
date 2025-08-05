@@ -147,8 +147,27 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             {/* 菜单底部 */}
             <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700">
               <div className="text-center">
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  段翔个人简历
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <img
+                    src="/touxiang.webp"
+                    alt="Dawson头像"
+                    className="w-6 h-6 rounded-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'block';
+                    }}
+                  />
+                  <span 
+                    className="text-sm text-gray-500 dark:text-gray-400"
+                    style={{display: 'none'}}
+                  >
+                    Dawson个人作品集
+                  </span>
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Dawson个人作品集
                 </p>
                 <div className="flex items-center justify-center gap-4">
                   <a

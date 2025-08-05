@@ -1,29 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Skill, Certificate } from '../../types';
-import { SkillCategory } from '../ui/SkillCategory';
-import { CertificateCard } from '../ui/CertificateCard';
+import { Skill, SkillLevel } from '../../types';
 import { Section } from '../common/Section';
-import { 
-  groupSkillsByCategory, 
-  groupCertificatesByType, 
-  sortCertificatesByDate,
-  getSkillStatistics 
-} from '../../utils/dataProcessing';
 
 interface SkillsSectionProps {
   skills: Skill[];
-  certificates: Certificate[];
 }
 
-export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, certificates }) => {
-  const [activeTab, setActiveTab] = useState<'skills' | 'certificates'>('skills');
+export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
+  // 按类别分组技能
+  const skillsByCategory = skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<string, Skill[]>);
 
-  // 数据处理
-  const skillsByCategory = groupSkillsByCategory(skills);
-  const certificatesByType = groupCertificatesByType(certificates);
-  const sortedCertificates = sortCertificatesByDate(certificates);
-  const skillStats = getSkillStatistics(skills);
+  // 技能等级配置
+  const levelConfig = {
+    [SkillLevel.EXPERT]: { label: '精通', color: 'emerald', percentage: 100 },
+    [SkillLevel.PROFICIENT]: { label: '熟练', color: 'blue', percentage: 80 },
+    [SkillLevel.GOOD]: { label: '良好', color: 'yellow', percentage: 60 },
+    [SkillLevel.BEGINNER]: { label: '入门', color: 'gray', percentage: 40 }
+  };
+
+  // 类别配置
+  const categoryConfig = {
+    '办公软件': {
+      icon: '📊',
+      color: 'blue',
+      bgGradient: 'from-blue-500 to-cyan-600'
+    },
+    '设计软件': {
+      icon: '🎨',
+      color: 'purple',
+      bgGradient: 'from-purple-500 to-pink-600'
+    },
+    '新兴技术': {
+      icon: '🤖',
+      color: 'green',
+      bgGradient: 'from-green-500 to-emerald-600'
+    },
+    '编程技能': {
+      icon: '💻',
+      color: 'orange',
+      bgGradient: 'from-orange-500 to-red-600'
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -48,51 +72,26 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, certificat
     }
   };
 
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        delay: 0.2,
         ease: "easeOut"
       }
     }
   };
 
-  const tabVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: 0.4
-      }
-    }
-  };
-
-  const contentVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
   return (
-    <Section id="skills" className="bg-white dark:bg-gray-900">
+    <Section id="skills" className="bg-gradient-to-br from-white via-gray-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto"
+        className="max-w-6xl mx-auto"
       >
         {/* 标题区域 */}
         <div className="text-center mb-16">
@@ -100,199 +99,207 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, certificat
             variants={titleVariants}
             className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
           >
-            技能与证书
+            专业技能
           </motion.h2>
           
           <motion.div
-            variants={subtitleVariants}
+            variants={titleVariants}
             className="flex items-center justify-center gap-4 mb-6"
           >
-            <div className="h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent flex-1 max-w-20" />
-            <div className="w-3 h-3 bg-indigo-500 rounded-full" />
-            <div className="h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent flex-1 max-w-20" />
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-1 max-w-20" />
+            <div className="w-3 h-3 bg-blue-500 rounded-full" />
+            <div className="h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent flex-1 max-w-20" />
           </motion.div>
           
           <motion.p
-            variants={subtitleVariants}
+            variants={titleVariants}
             className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
           >
-            专业技能与认证成就，持续学习与成长的见证
+            专注四大核心技能领域，持续精进专业能力
           </motion.p>
         </div>
 
-        {/* 标签切换 */}
+        {/* 技能分类展示 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {Object.entries(skillsByCategory).map(([category, categorySkills], categoryIndex) => {
+            const config = categoryConfig[category as keyof typeof categoryConfig];
+            if (!config) return null;
+
+            return (
+              <motion.div
+                key={category}
+                variants={cardVariants}
+                whileHover={{ y: -5 }}
+                className="group"
+              >
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 h-full border border-gray-100 dark:border-gray-700">
+                  {/* 类别标题 */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-12 h-12 bg-gradient-to-r ${config.bgGradient} rounded-xl flex items-center justify-center text-white text-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      {config.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {category}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">
+                        {categorySkills.length} 项技能
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 技能列表 */}
+                  <div className="space-y-4">
+                    {categorySkills.map((skill, skillIndex) => {
+                      const levelInfo = levelConfig[skill.level];
+                      return (
+                        <motion.div
+                          key={skill.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ 
+                            duration: 0.4, 
+                            delay: categoryIndex * 0.1 + skillIndex * 0.05 
+                          }}
+                          className="group/skill"
+                        >
+                          {/* 技能名称和等级 */}
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-semibold text-gray-900 dark:text-white group-hover/skill:text-blue-600 dark:group-hover/skill:text-blue-400 transition-colors duration-200">
+                              {skill.name}
+                            </h4>
+                            <span className={`px-2 py-1 text-xs font-medium rounded-full bg-${levelInfo.color}-100 text-${levelInfo.color}-700 dark:bg-${levelInfo.color}-900/30 dark:text-${levelInfo.color}-300`}>
+                              {levelInfo.label}
+                            </span>
+                          </div>
+
+                          {/* 技能描述 */}
+                          {skill.description && (
+                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 leading-relaxed">
+                              {skill.description}
+                            </p>
+                          )}
+
+                          {/* 技能进度条 */}
+                          <div className="relative">
+                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                              <motion.div
+                                className={`h-2 bg-gradient-to-r ${config.bgGradient} rounded-full`}
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.customPercentage || levelInfo.percentage}%` }}
+                                viewport={{ once: true }}
+                                transition={{ 
+                                  duration: 1, 
+                                  delay: categoryIndex * 0.2 + skillIndex * 0.1,
+                                  ease: "easeOut"
+                                }}
+                              />
+                            </div>
+                            <div className="absolute -top-1 right-0 text-xs text-gray-500 dark:text-gray-400">
+                              {skill.customPercentage || levelInfo.percentage}%
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* 技能统计概览 */}
         <motion.div
-          variants={tabVariants}
-          className="flex items-center justify-center mb-12"
+          variants={cardVariants}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
         >
-          <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-lg inline-flex">
-            <button
-              onClick={() => setActiveTab('skills')}
-              className={`px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
-                activeTab === 'skills'
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              专业技能
-            </button>
-            <button
-              onClick={() => setActiveTab('certificates')}
-              className={`px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
-                activeTab === 'certificates'
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              证书认证
-            </button>
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{skills.length}</h3>
+            <p className="text-gray-600 dark:text-gray-300">项技能</p>
+          </div>
+
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400 mx-auto mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              {skills.filter(s => s.level === SkillLevel.EXPERT).length}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">精通技能</p>
+          </div>
+
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 mx-auto mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">4</h3>
+            <p className="text-gray-600 dark:text-gray-300">个分类</p>
+          </div>
+
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+            <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center text-orange-600 dark:text-orange-400 mx-auto mb-4">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              {Math.round((skills.filter(s => s.level === SkillLevel.EXPERT).length / skills.length) * 100)}%
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">精通率</p>
           </div>
         </motion.div>
 
-        {/* 内容区域 */}
+        {/* 底部总结 */}
         <motion.div
-          key={activeTab}
-          variants={contentVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {activeTab === 'skills' ? (
-            <>
-              {/* 技能分类展示 */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                {Object.entries(skillsByCategory).map(([category, categorySkills], index) => (
-                  <SkillCategory
-                    key={category}
-                    category={category}
-                    skills={categorySkills}
-                    index={index}
-                  />
-                ))}
-              </div>
-
-              {/* 技能统计 */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6"
-              >
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{skillStats.total}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">项技能</p>
-                </div>
-
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{skillStats.byLevel.expert || 0}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">精通技能</p>
-                </div>
-
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{Object.keys(skillStats.byCategory).length}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">个分类</p>
-                </div>
-
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center text-orange-600 dark:text-orange-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    {Math.round((skillStats.byLevel.expert || 0) / skillStats.total * 100)}%
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">精通率</p>
-                </div>
-              </motion.div>
-            </>
-          ) : (
-            <>
-              {/* 证书展示 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                {sortedCertificates.map((certificate, index) => (
-                  <CertificateCard
-                    key={certificate.id}
-                    certificate={certificate}
-                    index={index}
-                  />
-                ))}
-              </div>
-
-              {/* 证书统计 */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-8"
-              >
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    {certificatesByType.certificate?.length || 0}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">专业证书</p>
-                </div>
-
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center text-yellow-600 dark:text-yellow-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    {certificatesByType.award?.length || 0}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">荣誉奖项</p>
-                </div>
-
-                <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400 mx-auto mb-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{certificates.length}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">总计</p>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </motion.div>
-
-        {/* 底部装饰 */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full shadow-lg">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <span className="font-medium">持续学习，不断进步</span>
+          <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl p-8 text-white relative overflow-hidden">
+            {/* 装饰性背景 */}
+            <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full transform -translate-x-16 -translate-y-16" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-12 translate-y-12" />
+            
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold mb-4">
+                专业技能，持续精进
+              </h3>
+              <p className="text-blue-100 max-w-2xl mx-auto mb-6">
+                专注于Office办公、设计创作、新兴技术和编程开发四大核心领域，不断学习新技术，提升专业能力，为用户提供更优质的服务。
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm">
+                <div className="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2">
+                  <span>📊</span>
+                  <span>Office专家</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2">
+                  <span>🎨</span>
+                  <span>设计能手</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2">
+                  <span>🤖</span>
+                  <span>AI应用</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2">
+                  <span>💻</span>
+                  <span>编程开发</span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </motion.div>

@@ -18,7 +18,7 @@ import { useResponsive } from './hooks/useResponsive'
 // import { getAdaptiveQualitySettings } from './utils/performanceOptimization'
 
 // 导入其他section组件
-import { EducationSection, ExperienceSection, ProjectsSection, SkillsSection, PortfolioSection, EvaluationSection, ContactSection } from './components/sections'
+import { SkillsSection, ServicesSection, AchievementsSection, PortfolioSection, ContactSection } from './components/sections'
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -28,7 +28,7 @@ function App() {
   const { showScrollTop, scrollToTop } = useScrollToTop()
 
   // 定义所有section的ID
-  const sectionIds = ['hero', 'education', 'experience', 'projects', 'skills', 'portfolio', 'evaluation', 'contact']
+  const sectionIds = ['hero', 'skills', 'services', 'achievements', 'portfolio', 'contact']
   
   // 滚动监听和导航联动
   const { activeSection, scrollToSection } = useScrollSpy(sectionIds)
@@ -77,51 +77,37 @@ function App() {
                   </AnimatedSection>
                 </SectionSpacing>
                 
-                {/* Education Section */}
-                <SectionSpacing id="education" {...sectionConfigs.education}>
-                  <AnimatedSection delay={0.1} sectionName="Education">
-                    <EducationSection education={personalData.education} />
-                  </AnimatedSection>
-                </SectionSpacing>
-                
-                {/* Experience Section */}
-                <SectionSpacing id="experience" {...sectionConfigs.experience}>
-                  <AnimatedSection delay={0.2} sectionName="Experience">
-                    <ExperienceSection workExperience={personalData.workExperience} />
-                  </AnimatedSection>
-                </SectionSpacing>
-                
-                {/* Projects Section */}
-                <SectionSpacing id="projects" {...sectionConfigs.projects}>
-                  <AnimatedSection delay={0.3} sectionName="Projects">
-                    <ProjectsSection projects={personalData.projects} />
-                  </AnimatedSection>
-                </SectionSpacing>
-                
                 {/* Skills Section */}
                 <SectionSpacing id="skills" {...sectionConfigs.skills}>
-                  <AnimatedSection delay={0.4} sectionName="Skills">
-                    <SkillsSection skills={personalData.skills} certificates={personalData.certificates} />
+                  <AnimatedSection delay={0.1} sectionName="Skills">
+                    <SkillsSection skills={personalData.skills} />
+                  </AnimatedSection>
+                </SectionSpacing>
+                
+                {/* Services Section */}
+                <SectionSpacing id="services" {...sectionConfigs.services}>
+                  <AnimatedSection delay={0.2} sectionName="Services">
+                    <ServicesSection services={personalData.services} />
+                  </AnimatedSection>
+                </SectionSpacing>
+                
+                {/* Achievements Section */}
+                <SectionSpacing id="achievements" {...sectionConfigs.achievements}>
+                  <AnimatedSection delay={0.3} sectionName="Achievements">
+                    <AchievementsSection achievements={personalData.achievements} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Portfolio Section */}
                 <SectionSpacing id="portfolio" {...sectionConfigs.portfolio}>
-                  <AnimatedSection delay={0.5} sectionName="Portfolio">
+                  <AnimatedSection delay={0.4} sectionName="Portfolio">
                     <PortfolioSection portfolio={personalData.portfolio} />
-                  </AnimatedSection>
-                </SectionSpacing>
-                
-                {/* Evaluation Section */}
-                <SectionSpacing id="evaluation" {...sectionConfigs.evaluation}>
-                  <AnimatedSection delay={0.6} sectionName="Evaluation">
-                    <EvaluationSection selfEvaluation={personalData.selfEvaluation} />
                   </AnimatedSection>
                 </SectionSpacing>
                 
                 {/* Contact Section */}
                 <SectionSpacing id="contact" {...sectionConfigs.contact}>
-                  <AnimatedSection delay={0.7} sectionName="Contact">
+                  <AnimatedSection delay={0.5} sectionName="Contact">
                     <ContactSection personalInfo={personalData.basicInfo} />
                   </AnimatedSection>
                 </SectionSpacing>

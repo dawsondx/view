@@ -1,8 +1,10 @@
 {
-  "name": "personal-portfolio",
+  "name": "dawson-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
+  "description": "Dawson个人作品集 - Office培训师 | PPT设计师 | 神器收藏家",
+  "author": "Dawson <dawsondx@foxmail.com>",
   "homepage": "https://dawsondx.github.io/resume0801/",
   "scripts": {
     "dev": "vite",

@@ -42,12 +42,10 @@ export const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
   // 导航项配置
   const navigationItems = [
     { id: 'hero', label: '首页', icon: '🏠' },
-    { id: 'education', label: '教育', icon: '🎓' },
-    { id: 'experience', label: '经历', icon: '💼' },
-    { id: 'projects', label: '项目', icon: '🚀' },
     { id: 'skills', label: '技能', icon: '⚡' },
+    { id: 'services', label: '服务', icon: '🛠️' },
+    { id: 'achievements', label: '成就', icon: '🏆' },
     { id: 'portfolio', label: '作品', icon: '📁' },
-    { id: 'evaluation', label: '评价', icon: '⭐' },
     { id: 'contact', label: '联系', icon: '📧' }
   ].filter(item => sectionIds.includes(item.id))
 
@@ -144,13 +142,11 @@ export const NavigationDots: React.FC<NavigationDotsProps> = ({
   className = ''
 }) => {
   const navigationItems = [
-    { id: 'hero', label: '首页' },
-    { id: 'education', label: '教育背景' },
-    { id: 'experience', label: '工作经历' },
-    { id: 'projects', label: '项目经验' },
-    { id: 'skills', label: '技能证书' },
+    { id: 'hero', label: '个人介绍' },
+    { id: 'skills', label: '专业技能' },
+    { id: 'services', label: '服务内容' },
+    { id: 'achievements', label: '成就展示' },
     { id: 'portfolio', label: '作品集' },
-    { id: 'evaluation', label: '自我评价' },
     { id: 'contact', label: '联系方式' }
   ].filter(item => sectionIds.includes(item.id))
 

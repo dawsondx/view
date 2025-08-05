@@ -66,8 +66,8 @@ export const useNavigation = () => {
       
       // 获取所有章节元素
       const sections = [
-        'hero', 'education', 'experience', 'projects', 
-        'skills', 'portfolio', 'evaluation', 'contact'
+        'hero', 'skills', 'services', 'achievements', 
+        'portfolio', 'contact'
       ];
       
       let activeSection = 'hero';

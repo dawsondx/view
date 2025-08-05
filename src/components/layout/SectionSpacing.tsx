@@ -107,35 +107,25 @@ export const sectionConfigs = {
     padding: 'none' as const,
     maxWidth: 'full' as const
   },
-  education: {
-    background: 'default' as const,
-    padding: 'large' as const,
-    maxWidth: 'xl' as const
-  },
-  experience: {
-    background: 'alternate' as const,
-    padding: 'large' as const,
-    maxWidth: 'xl' as const
-  },
-  projects: {
-    background: 'default' as const,
-    padding: 'large' as const,
-    maxWidth: '2xl' as const
-  },
   skills: {
     background: 'alternate' as const,
     padding: 'large' as const,
     maxWidth: 'xl' as const
   },
-  portfolio: {
+  services: {
     background: 'default' as const,
     padding: 'large' as const,
     maxWidth: 'xl' as const
   },
-  evaluation: {
-    background: 'gradient' as const,
+  achievements: {
+    background: 'alternate' as const,
     padding: 'large' as const,
-    maxWidth: 'lg' as const
+    maxWidth: '2xl' as const
+  },
+  portfolio: {
+    background: 'default' as const,
+    padding: 'large' as const,
+    maxWidth: 'xl' as const
   },
   contact: {
     background: 'default' as const,

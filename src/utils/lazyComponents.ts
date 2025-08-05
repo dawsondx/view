@@ -13,34 +13,24 @@ export const createLazyComponent = <T extends React.ComponentType<any>>(
 }
 
 // 懒加载的section组件（备用）
-export const LazyEducationSection = createLazyComponent(
-  () => import('../components/sections/EducationSection'),
-  'EducationSection'
-)
-
-export const LazyExperienceSection = createLazyComponent(
-  () => import('../components/sections/ExperienceSection'),
-  'ExperienceSection'
-)
-
-export const LazyProjectsSection = createLazyComponent(
-  () => import('../components/sections/ProjectsSection'),
-  'ProjectsSection'
-)
-
 export const LazySkillsSection = createLazyComponent(
   () => import('../components/sections/SkillsSection'),
   'SkillsSection'
 )
 
+export const LazyServicesSection = createLazyComponent(
+  () => import('../components/sections/ServicesSection'),
+  'ServicesSection'
+)
+
+export const LazyAchievementsSection = createLazyComponent(
+  () => import('../components/sections/AchievementsSection'),
+  'AchievementsSection'
+)
+
 export const LazyPortfolioSection = createLazyComponent(
   () => import('../components/sections/PortfolioSection'),
   'PortfolioSection'
-)
-
-export const LazyEvaluationSection = createLazyComponent(
-  () => import('../components/sections/EvaluationSection'),
-  'EvaluationSection'
 )
 
 export const LazyContactSection = createLazyComponent(
@@ -52,12 +42,10 @@ export const LazyContactSection = createLazyComponent(
 export const preloadSections = () => {
   // 预加载所有section组件
   const preloadPromises = [
-    import('../components/sections/EducationSection'),
-    import('../components/sections/ExperienceSection'),
-    import('../components/sections/ProjectsSection'),
     import('../components/sections/SkillsSection'),
+    import('../components/sections/ServicesSection'),
+    import('../components/sections/AchievementsSection'),
     import('../components/sections/PortfolioSection'),
-    import('../components/sections/EvaluationSection'),
     import('../components/sections/ContactSection')
   ]
 
