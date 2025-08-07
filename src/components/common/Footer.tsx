@@ -186,13 +186,33 @@ export const Footer: React.FC<FooterProps> = ({ personalInfo }) => {
             </div>
           </div>
 
-          {/* 备案信息预留位置 */}
+          {/* 备案信息 */}
           <div className="mt-4 pt-4 border-t border-gray-800 text-center">
-            <div className="text-gray-500 text-xs space-y-1">
-              {/* 备案信息将在此处显示，格式示例： */}
-              {/* <p>粤ICP备XXXXXXXX号-1</p> */}
-              {/* <p>粤公网安备 XXXXXXXXXXXXXX号</p> */}
-              <p className="text-gray-600">备案信息预留位置</p>
+            <div className="text-gray-500 text-xs space-y-2">
+              {/* 公安备案信息 */}
+              <p className="flex items-center justify-center gap-1">
+                <img src="/beian.png" alt="备案图标" className="w-3 h-3" />
+                <a 
+                  href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002007584" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-cyan-400 transition-colors duration-200"
+                >
+                  粤公网安备44030002007584号
+                </a>
+              </p>
+              
+              {/* ICP备案信息 */}
+              <p>
+                <a 
+                  href="https://beian.miit.gov.cn/#/Integrated/recordQuery" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-cyan-400 transition-colors duration-200"
+                >
+                  粤ICP备2025454561号-1
+                </a>
+              </p>
             </div>
           </div>
         </motion.div>
